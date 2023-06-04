@@ -1,0 +1,13 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "if-env TYPE=server && (cd server1 && npm install) || (cd client && npm install)",
+    "server": "node server1/index.js",
+    "client": "cd client && npm start"
+  },
+  "dependencies": {
+    "if-env": "^1.0.4"
+  }
+}
