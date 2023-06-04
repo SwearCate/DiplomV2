@@ -4,6 +4,8 @@ import {useCookies} from "react-cookie";
 import ListItem from "./components/ListItem";
 import Auth from "./components/Auth";
 import MyMap from "./components/MyMap";
+import {SearchControl} from "@pbe/react-yandex-maps";
+
 
 
 
@@ -42,9 +44,10 @@ const App = () => {
             {authToken && (
                 <>
                     <MyMap>
-
+                        <div className="search-container"></div>
                     </MyMap>
                     <ListHeader listName={"Holiday Tick List"} getData={getData} />
+                    <p>Welcome back {userEmail}</p>
                     {sortedTasks?.map((task) => (
                         <ListItem key={task.id} task={task} getData={getData} />
                     ))}
