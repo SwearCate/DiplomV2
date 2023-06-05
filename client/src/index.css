@@ -265,11 +265,49 @@ input{
 /* œŒ»—  */
 
 .search-container{
+    position: absolute;
+    width: 28%;
+    height: 7%;
+    left: 2%;
+    top: 2%;
+
+    background: linear-gradient(90deg, #653AC3 12.79%, #8F55FF 100%);
+    border-radius: 26px;
+
+    z-index: 1;
+
+}
+
+.ymaps-2-1-79-search{
     width: 500px;
-    height: 500px;
-    background-color: white;
+    border-radius: 40px;
+    border: black;
+    border: 40px;
+    background-color: purple !important;
+    left: 50px;
+    top: 20px;
+}
+
+ymaps-2-1-79-searchbox{
+    width: 500px;
+    border-radius: 40px;
+    border-color: purple !important;
+    background-color: purple !important;
+    left: 40px !important;
 }
 
 .ymaps-2-1-79-searchbox-input{
     width: 500px;
+    border-radius: 40px;
+    background-color: purple !important;
+}
+.searchbox-input{
+    margin: 0.5% 3% !important;
+    width: 70%;
+    background: #FFFFFF;
+    border-radius: 16px;
+}
+
+.ymaps-2-1-79-balloon__content{
+    background-color: purple !important;
 }

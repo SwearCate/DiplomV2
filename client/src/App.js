@@ -4,7 +4,6 @@ import {useCookies} from "react-cookie";
 import ListItem from "./components/ListItem";
 import Auth from "./components/Auth";
 import MyMap from "./components/MyMap";
-import {SearchControl} from "@pbe/react-yandex-maps";
 
 
 
@@ -14,6 +13,7 @@ const App = () => {
     const authToken = cookies.AuthToken
     const userEmail = cookies.Email
     const [ tasks, setTasks] = useState(null)
+
 
 
     const getData = async () =>{
@@ -38,22 +38,29 @@ const App = () => {
     // сортировка
     const sortedTasks = tasks?.sort((a,b) => new Date(a.date) - new Date(b.date))
 
+
+
     return (
         <div className="app">
             {!authToken && <Auth/>}
             {authToken && (
                 <>
                     <MyMap>
-                        <div className="search-container"></div>
+
                     </MyMap>
                     <ListHeader listName={"Holiday Tick List"} getData={getData} />
                     <p>Welcome back {userEmail}</p>
                     {sortedTasks?.map((task) => (
                         <ListItem key={task.id} task={task} getData={getData} />
                     ))}
+                    <div className="search-container">
+                        <form>
+                            <input type = "search" className="searchbox-input"/>
+                            <input type= "submit"/>
+                        </form>
+                    </div>
                 </>
             )}
-
         </div>
     );
 
