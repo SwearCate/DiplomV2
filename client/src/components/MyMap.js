@@ -1,15 +1,27 @@
-import {Map, YMaps, ZoomControl, SearchControl, Placemark, GeolocationControl, withYMaps} from "@pbe/react-yandex-maps";
-import {useRef, useState} from "react";
+import {Map, YMaps, ZoomControl, SearchControl, Placemark, GeolocationControl, withYMaps, Polyline} from "@pbe/react-yandex-maps";
+import {useEffect, useRef, useState} from "react";
 import React from 'react';
 import {render} from "react-dom";
 
 
 
 
-const MyMap = () => {
+const MyMap = (props) => {
+    const ref = useRef();
+    const ref2 = useRef();
+    const ymaps = React.useRef(null);
+    const polyline = React.createRef(null);
 
 
     const map = useRef(null);
+
+    const [newCoords, setNewCoords] = useState([
+        55.779625,
+        37.5012
+    ])
+    const [value, setValue] = useState("");
+    const [address, setAddress] = useState("");
+    const [options, setOptions] = useState([]);
 
     const mapState = {
         center: [55.779625, 37.5012],
@@ -23,13 +35,31 @@ const MyMap = () => {
         }
     };
 
+    useEffect(() => {
+        (async () => {
+            try {
+                if (value) {
+                    const res = await fetch(
+                        `https://geocode-maps.yandex.ru/1.x/?apikey=3245f75b-f1e7-4de6-bcc8-a3d7cb991f4c&format=json&geocode=${value}`
+                    );
+                    const data = await res.json();
+                    const collection = data.response.GeoObjectCollection.featureMember.map(
+                        (item) => item.GeoObject
+                    );
+                    setOptions(() => collection);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })();
+    }, [value]);
+
     return (
     <YMaps
 
             query={{
                     ns: "use-load-option",
                     apikey: "3245f75b-f1e7-4de6-bcc8-a3d7cb991f4c",
-
 
             }}
         >
@@ -39,17 +69,24 @@ const MyMap = () => {
                         zoom: 9,
                         controls: [],
                     }}
-                    options={{suppressMapOpenBlock: true}}
+                    options={{suppressMapOpenBlock: true,
+                        copyrightLogoVisible: false,
+                        copyrightProvidersVisible: false,
+                        copyrightUaVisible: false
+                }}
                     width='100%'
                     height='98vh'
+
                 >
                     <ZoomControl />
                     <GeolocationControl
                         options={
                         {float: 'right',}} />
                     <SearchControl
-                    options={{float: "top"}}
-                    m
+                    options={{float: "top",
+                        provider: "yandex#search",
+                        noSuggestPanel: true
+                    }}
                     >
                     </SearchControl>
                     <Placemark
@@ -58,14 +95,15 @@ const MyMap = () => {
                         options={{
                             preset: "islands#violetCircleDotIcon",
                             balloonCloseButton: true,
+                            draggable: true
                         }}
                         properties={{
-                            iconContent: "Начало",
+                            iconContent: "РҐР°Р№",
                             balloonContent: 'dd'
                         }}
 
-                    />
 
+                    />
                 </Map>
             </div>
         </YMaps>

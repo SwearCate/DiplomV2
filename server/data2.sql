@@ -1,1 +1,1 @@
-GRANT ALL PRIVILEGES on database mapapp to "vel-d";
+GRANT ALL PRIVILEGES on table employees to sasha;

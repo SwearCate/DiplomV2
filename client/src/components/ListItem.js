@@ -4,7 +4,8 @@ import Modal from "./Modal";
 import ProgressBar from "./ProgressBar";
 
 
-const ListItem = ({ task, getData }) => {
+
+const ListItem = ({ task, getData, employee }) => {
     const [showModal, setShowModal] = useState(false)
 
     const deleteItem = async () =>{
@@ -25,12 +26,12 @@ const ListItem = ({ task, getData }) => {
 
             <div className='info-container'>
                 <TickIcon/>
-                <p className='task-title'>{task.title}</p>
+                <p className='task-title'>{employee?.name}</p>
             <ProgressBar/>
             </div>
 
             <div className='button-container'>
-                <button className='edit' onClick={() => setShowModal(true)}>EDIT</button>
+                <button className='edit' onClick={() => setShowModal(true)}>Edit</button>
                 <button className='delete' onClick={deleteItem}>DELETE</button>
             </div>
             {showModal && <Modal mode={'edit'} setShowModal={setShowModal} getData={getData} task={task}/>}

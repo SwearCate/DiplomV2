@@ -1,2 +1,2 @@
-INSERT INTO todos(id, user_email, title, progress, date) VALUES ('0', 'sasha@test.com', 'first', 10, '02.07.2023')
+INSERT INTO employees(id, employee_email, name, phone, location, user_email) VALUES ('3', 'sasha3@test.com', 'aleksandra','+79811486076' , 'Больнeица', '123@gg.com')
 

@@ -4,6 +4,9 @@ import {useCookies} from "react-cookie";
 import ListItem from "./components/ListItem";
 import Auth from "./components/Auth";
 import MyMap from "./components/MyMap";
+import Header from "./components/Header";
+import ModalTasks from "./components/ModalTasks";
+import List from "./components/List"
 
 
 
@@ -13,6 +16,13 @@ const App = () => {
     const authToken = cookies.AuthToken
     const userEmail = cookies.Email
     const [ tasks, setTasks] = useState(null)
+    const [showModal, setShowModal] = useState(false);
+    const [ employees, setEmployees] = useState(null)
+    const [mode, setMode] = useState('employees'); // add state variable for mode
+
+    const closeModal = () =>{
+        setShowModal(false);
+    }
 
 
 
@@ -35,7 +45,7 @@ const App = () => {
 
     console.log(tasks)
 
-    // ����������
+    // сортировка
     const sortedTasks = tasks?.sort((a,b) => new Date(a.date) - new Date(b.date))
 
 
@@ -45,20 +55,22 @@ const App = () => {
             {!authToken && <Auth/>}
             {authToken && (
                 <>
+                    <List mode="employees"/>
                     <MyMap>
 
                     </MyMap>
-                    <ListHeader listName={"Holiday Tick List"} getData={getData} />
-                    <p>Welcome back {userEmail}</p>
+                    <button onClick={() => {
+                        setMode(mode === 'employees' ? 'tasks' : 'employees');
+                        setShowModal(true);
+                    }} className="employees-button">ЭТО Я</button>
+                    <ListHeader listName={"Задания"} getData={getData} />
+                    <p>Welcome Привет! {userEmail}</p>
                     {sortedTasks?.map((task) => (
                         <ListItem key={task.id} task={task} getData={getData} />
                     ))}
-                    <div className="search-container">
-                        <form>
-                            <input type = "search" className="searchbox-input"/>
-                            <input type= "submit"/>
-                        </form>
-                    </div>
+                    <ModalTasks title="Удаление" active={showModal} onClose={closeModal}>
+                        <div>Вы точно хотите?</div>
+                    </ModalTasks>
                 </>
             )}
         </div>

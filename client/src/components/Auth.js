@@ -42,8 +42,8 @@ const Auth = () => {
     return (
         <div className='auth-containter'>
             <div className="auth-container-box">
-                <form>
-                    <h2>{isLogIn ? 'Please log in' : "Please sign up"}</h2>
+                <form id="auth">
+                    <h2>{isLogIn ? 'Вход' : "Регистрация"}</h2>
                     <input
                         type="email"
                         placeholder="email"
@@ -58,18 +58,18 @@ const Auth = () => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
 
                     />}
-                    <input type="submit" className="create" onClick={(e) => handleSubmit(e, isLogIn ? 'login ' : 'signup')}/>
                     {error && <p>{error}</p>}
                 </form>
+                <input type="submit" className="create" id="auth" onClick={(e) => handleSubmit(e, isLogIn ? 'login ' : 'signup')}/>
                 <div className="auth-options">
                     <button
                         onClick={() => viewLogin(false)}
                         style={{backgroundColor : !isLogIn ? 'rgb(255,255,255)' : 'rgb(188, 188, 188)'}}
-                    >Sign Up</button>
+                    >Регистрация</button>
                     <button
                         onClick={() => viewLogin(true)}
                         style={{backgroundColor : isLogIn ? 'rgb(255,255,255)' : 'rgb(188, 188, 188)'}}
-                    >Login</button>
+                    >Вход</button>
                 </div>
 
             </div>

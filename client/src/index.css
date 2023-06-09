@@ -19,6 +19,13 @@ body{
     width: 1920px;
     height: 1080px;
 }
+.button-container{
+    position: absolute;
+    top: 2%;
+    width: 7%;
+    height: 7%;
+    left: 92%;
+}
 
 .button-container, .info-container{
     display: flex;
@@ -37,6 +44,7 @@ body{
     color: rgb(141, 181, 145);
     background-color: transparent;
     text-transform: uppercase;
+
 }
 
 .edit:hover{
@@ -64,9 +72,17 @@ body{
 }
 
 .create{
-    border: 1.5px solid rgb(108, 115, 148);
-    color: rgb(108, 115, 148);
-    text-transform: uppercase;
+    background: linear-gradient(90deg, #653AC3 12.79%, #8F55FF 100%);
+    border-radius: 44px;
+    color: #FFFFFF;
+    width: 150%;
+    height: 15%;
+    margin-top: 10%;
+
+}
+
+.modal input{
+    width: 50%;
 }
 .create:hover{
     background-color: rgb(131, 138, 172);
@@ -78,9 +94,12 @@ body{
 }
 
 .signout{
-    border: 1.5px solid rgb(255, 175, 163);
-    background-color: rgb(255, 175, 163) !important;
-    color: rgb(234, 234, 234);
+    border: 0;
+    background-image: url("./Static/Images/SignOut.svg");
+    background-repeat: no-repeat;
+    width: 57px;
+    height: 57px;
+    margin-left: 2%;
 }
 .signout:hover{
     background-color: rgb(175, 94, 94) !important;
@@ -91,7 +110,17 @@ body{
     background-color: rgb(175, 81, 81)!important;
     border: 1.5px solid rgb(175, 81, 81)!important;
     color: white;
+    border-radius: 26px;
 }
+
+.tasks{
+    border: 0;
+    background-image: url("./Static/Images/employees.svg");
+    background-repeat: no-repeat;
+    width: 57px;
+    height: 57px;
+}
+
 
 input{
     margin: 11px 0;
@@ -100,6 +129,13 @@ input{
     border: 1.5px solid rgb(230, 232, 236);
 }
 
+.header-button-container{
+    position: absolute;
+    top: 2%;
+    width: 7%;
+    height: 7%;
+    left: 92%;
+}
 
 .list-header{
     width: 100%;
@@ -107,15 +143,25 @@ input{
     justify-content: space-between;
     border-bottom: rgba(0,0,0, 0.05);
 }
+.list-header h1{
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .list-item{
-    width: 100%;
-    margin: 10px 0;
-    border-radius: 10px;
+    width: 40%;
+    height: 15%;
+    margin-top: 1%;
     box-shadow: rgba(0,0,0,0.08) 0 0 0 1px;
     display: flex;
     justify-content: space-between;
+
+    background: #FFFFFF;
+    border-radius: 26px;
+
+    filter: drop-shadow(5px 4px 21px rgba(0, 0, 0, 0.1));
 }
+
 
 .tick{
     padding: 10px;
@@ -127,7 +173,7 @@ input{
     stroke-width:32px
 }
 
- /* ÃŒƒ¿À‹ÕŒ≈ */
+ /*–ú–æ–¥–∞–ª—å–Ω–æ–µ */
 .overlay{
     position: absolute;
     left: 0;
@@ -139,11 +185,22 @@ input{
     justify-content: center;
     align-items: center;
 }
+.modalTasks{
+    position: fixed;
+    width: 500px;
+    background-color: rgb(255, 255, 255);
+    padding: 40px;
+    border-radius: 10px;
+    margin-left: 20%;
+    box-shadow: rgb(0,0,0,0.05) 0 6px 24px 0, rgba(0,0,0,0.08) 0 0 0 1px;
+}
+
 .modal{
     width: 500px;
     background-color: rgb(255, 255, 255);
     padding: 40px;
     border-radius: 10px;
+    margin-left: 20%;
     box-shadow: rgb(0,0,0,0.05) 0 6px 24px 0, rgba(0,0,0,0.08) 0 0 0 1px;
 }
 .modal .form-title-container{
@@ -171,21 +228,34 @@ input{
 /* auth */
 
 .auth-containter{
+    position: absolute;
+    width: 328px;
+    height: 426px;
     display: flex;
     justify-content: center;
     margin: 50px;
+    left: 37%;
+
+
+    color: #FFFFFF;
+
 }
 .auth-containter-box{
     width: 500px;
-    border-radius: 10px;
     overflow: hidden;
     box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
+
+
 }
-.auth-containter-box form{
+.auth-containter form{
     display: flex;
     flex-direction: column;
-    height: 350px;
-    padding: 20px;
+    height: 60%;
+    width: 100%;
+    padding: 20%;
+
+    background: linear-gradient(90deg, #653AC3 12.79%, #8F55FF 100%);
+    border-radius: 34px;
 }
 
 .auth-options{
@@ -195,10 +265,13 @@ input{
     width: 50%;
     border: none;
     padding: 10px;
-    color: rgb(35,38,47);
+    color: #FFFFFF;
+
+    background: linear-gradient(90deg, #653AC3 12.79%, #8F55FF 100%);
+    border-radius: 34px;
 }
 
-/*  ¿–“¿ */
+/* –ö–ê–†–¢–ê*/
 
 #map{
     width: 100%;
@@ -262,7 +335,7 @@ input{
     margin-left: 11px;
 }
 
-/* œŒ»—  */
+/* ÔøΩÔøΩÔøΩÔøΩÔøΩ */
 
 .search-container{
     position: absolute;
@@ -278,8 +351,16 @@ input{
 
 }
 
+.ymaps-2-1-79-searchbox__normal-layout{
+    width: 100% !important;
+    background: linear-gradient(90deg, #653AC3 12.79%, #8F55FF 100%);
+    border-radius: 26px;
+}
+
 .ymaps-2-1-79-search{
-    width: 500px;
+    position: absolute;
+    width: 70px;
+    height: 78px;
     border-radius: 40px;
     border: black;
     border: 40px;
@@ -291,23 +372,49 @@ input{
 ymaps-2-1-79-searchbox{
     width: 500px;
     border-radius: 40px;
-    border-color: purple !important;
-    background-color: purple !important;
     left: 40px !important;
+}
+.input.ymaps-2-1-79-searchbox-input__input {
+    font-family: Roboto, serif !important;
+    font-size: 20px !important;
 }
 
 .ymaps-2-1-79-searchbox-input{
     width: 500px;
+    height: 40px;
+    top: 15px !important;
+    left: 10px;
     border-radius: 40px;
-    background-color: purple !important;
 }
-.searchbox-input{
-    margin: 0.5% 3% !important;
-    width: 70%;
-    background: #FFFFFF;
-    border-radius: 16px;
+.ymaps-2-1-79-searchbox__input-cell{
+    width: 580px !important;
 }
 
-.ymaps-2-1-79-balloon__content{
-    background-color: purple !important;
+.ymaps-2-1-79-searchbox-button{
+    background-repeat: no-repeat;
+    background-image: url("Static/Images/search.svg");
+    top: 20px;
+    right: 30px;
+    color: rgba(143, 85, 255, 0) !important;
+
+    width: 46px !important;
+    height: 46px !important;
+    background-color: rgba(143, 85, 255, 0) !important;
 }
+
+/* employees */
+.employees-button{
+    border: 0;
+    background-image: url("./Static/Images/employees.svg");
+    background-repeat: no-repeat;
+    width: 57px;
+    height: 57px;
+    position: absolute;
+    top: 2.5%;
+    left: 89%;
+}
+.testList{
+    height: 500px;
+}
+
+

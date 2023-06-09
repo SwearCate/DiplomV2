@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {useCookies} from "react-cookie";
+import ListItem from "./ListItem";
 
 const Modal = ({mode, setShowModal,getData, task}) => {
     const [cookies, setCookie, removeCookie] = useCookies(null)
@@ -20,7 +21,7 @@ const Modal = ({mode, setShowModal,getData, task}) => {
 
             })
             if(response.status === 200){
-                console.log("Ğàáîòàåò")
+                console.log("Ğ Ğ°Ğ±Ğ¾Ñ‚Ğ°ĞµÑ‚")
                 setShowModal(false)
                 getData()
             }
@@ -61,6 +62,7 @@ const Modal = ({mode, setShowModal,getData, task}) => {
     }
 
     return (
+
         <div className="overlay">
             <div className="modal">
                 <div className="form-title-container">

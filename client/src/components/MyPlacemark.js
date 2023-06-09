@@ -4,7 +4,23 @@ import ReactDOM from 'react-dom';
 import { Placemark } from '@pbe/react-yandex-maps';
 
 const makeLayout = (layoutFactory, component, contentKey) => {
-    const Layout = layoutFactory.createClass('<div></div>', {
+    const Layout = layoutFactory.createClass(`<div class="pin-container">      
+	<div class="placemark-description">          
+  	<p class="placemark-description__title">
+    	${description.title}
+    </p>          
+   	<p class="placemark-description__subtitle">              
+    	${description.subtitle.prefix}              
+      <span class="placemark-description__price">
+      	${description.subtitle.body}
+      </span>              
+      ${description.subtitle.postfix}          
+    </p>      
+  </div>      
+  <div class="pin-container__pin">          
+    <div class="placemark__background"></div>      
+  </div>
+</div>`, {
         build: function() {
             Layout.superclass.build.call(this);
 
