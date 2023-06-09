@@ -1,11 +1,14 @@
 
 import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
+import {PropsWithChildren} from "react";
+import TickIcon from "./TickIcon";
+import ProgressBar from "./ProgressBar";
 
 
 
 
-const List = ({ mode }) => {
+const List = ({ mode, active, onClose, children, task }: PropsWithChildren) => {
     const [cookies, setCookie, removeCookie] = useCookies();
     const authToken = cookies.AuthToken;
     const userEmail = cookies.Email;
@@ -34,15 +37,21 @@ const List = ({ mode }) => {
         if (authToken) {
             getData();
         }
-    }, []);
+    }, [mode]); // add mode to dependency array
+
 
     return (
-        <div className="testList">
+        <div className="list-item">
             <ul>
                 {data?.map((item) => (
                     <li key={item.id}>{item.name || item.title}</li>
                 ))}
             </ul>
+            <div className='info-container'>
+                <TickIcon/>
+                <p className='task-title'>{employee?.name}</p>
+                <ProgressBar/>
+            </div>
         </div>
     );
 };

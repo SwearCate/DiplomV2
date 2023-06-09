@@ -6,6 +6,8 @@ import {useState} from "react";
 import ListItem from "./ListItem";
 import {useCookies} from "react-cookie";
 import {useEffect} from "react";
+import TickIcon from "./TickIcon";
+import ProgressBar from "./ProgressBar";
 
 interface IModalProps {
     active: boolean;
@@ -15,28 +17,42 @@ interface IModalProps {
 }
 
 
-const ModalTasks = ({active, title, onSubmit, onClose, children, task}: PropsWithChildren) => {
+const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: PropsWithChildren) => {
     const [cookies, setCookie, removeCookie] = useCookies()
     const authToken = cookies.AuthToken
     const userEmail = cookies.Email
     const [ employee, setEmployees] = useState(null)
+    const [tasks, setTasks] = useState(null);
+    const [data, setData] = useState(null);
 
-    const getData = async () =>{
-        try{
-            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/employees/${userEmail}`)
-            const json = await response.json()
-            setEmployees(json)
-        } catch (err){
-            console.error(err)
+
+
+    const getData = async () => {
+        console.log('fetchData called, mode:', mode);
+        try {
+            let response;
+            if (mode === 'tasks') {
+                console.log('fetching tasks');
+                response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${userEmail}`);
+                console.log('response:', response);
+            } else if (mode === 'employees') {
+                console.log('fetching employees');
+                response = await fetch(`${process.env.REACT_APP_SERVERURL}/employees/${userEmail}`);
+                console.log('response:', response);
+            }
+            const json = await response.json();
+            setData(json); // set data state variable with data from API
+        } catch (err) {
+            console.error(err);
         }
-    }
+    };
 
 
     useEffect(() => {
-        if(authToken){
-            getData()
+        if (authToken) {
+            getData();
         }
-    }, []);
+    }, [mode]); // add mode to dependency array
 
     console.log(employee)
 
@@ -56,9 +72,14 @@ const ModalTasks = ({active, title, onSubmit, onClose, children, task}: PropsWit
                     <div className="modal-title">{employee?.name}</div>
                 </div>
                 <div className="modal-body">{children}
-                    {sortedTasks?.map((employee) => (
-                        <ListItem key={employee.id} employee={employee} getData={getData} />
+                    {data?.map((item) => (
+                        <li key={item.id}>{item.name || item.title}</li>
                     ))}
+                </div>
+                <div className='info-container'>
+                    <TickIcon/>
+                    <p className='task-title'>{employee?.name}</p>
+                    <ProgressBar/>
                 </div>
                 <div className="modal-footer">
                     <button>Подтвердить</button>
