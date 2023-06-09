@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {PropsWithChildren} from "react";
 import TickIcon from "./TickIcon";
 import ProgressBar from "./ProgressBar";
+import "./modal.css"
 
 
 
@@ -38,19 +39,22 @@ const List = ({ mode, active, onClose, children, task }: PropsWithChildren) => {
             getData();
         }
     }, [mode]); // add mode to dependency array
-
+    console.log(data)
 
     return (
         <div className="list-item">
             <ul>
                 {data?.map((item) => (
-                    <li key={item.id}>{item.name || item.title}</li>
+                    <li key={item.id}>
+                        {item.name || item.title}
+                        <span>{item.location}</span>
+                    </li>
                 ))}
             </ul>
             <div className='info-container'>
                 <TickIcon/>
                 <p className='task-title'>{employee?.name}</p>
-                <ProgressBar/>
+
             </div>
         </div>
     );

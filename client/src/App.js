@@ -36,7 +36,7 @@ const App = () => {
 
     const handleClick = () => {
         setShowModal(true)
-        setMode('tasks')
+        setMode('employees')
         console.log('click')
     };
 
@@ -69,7 +69,7 @@ const App = () => {
                         <ListItem key={task.id} task={task} getData={getData} />
                     ))}
                     <ModalTasks mode={mode} title="Удаление" active={showModal} onClose={closeModal}>
-                        <div>Вы точно хотите?</div>
+                        <div></div>
                     </ModalTasks>
                 </>
             )}

@@ -47,6 +47,12 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
         }
     };
 
+    const [startIndex, setStartIndex] = useState(0);
+
+    const handleNextClick = () => {
+        setStartIndex((startIndex + 3) % data.length);
+    };
+
 
     useEffect(() => {
         if (authToken) {
@@ -72,19 +78,14 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                     <div className="modal-title">{employee?.name}</div>
                 </div>
                 <div className="modal-body">{children}
-                    {data?.map((item) => (
-                        <li key={item.id}>{item.name || item.title}</li>
+                    {data.slice(startIndex, startIndex + 3).map((item) => (
+                        <div key={item.id} className="modal-employee">
+                            <p>Имя: {item.name}</p>
+                            <p>Телефон: {item.phone}</p>
+                            <p>Место: {item.location}</p>
+                        </div>
                     ))}
-                </div>
-                <div className='info-container'>
-                    <TickIcon/>
-                    <p className='task-title'>{employee?.name}</p>
-                    <ProgressBar/>
-                </div>
-                <div className="modal-footer">
-                    <button>Подтвердить</button>
-                    <button>Отмена</button>
-                    <button onClick={onClose}>Закрой</button>
+                    <button onClick={handleNextClick}>Следующие</button>
                 </div>
             </div>
 
