@@ -7,6 +7,8 @@ import MyMap from "./components/MyMap";
 import Header from "./components/Header";
 import ModalTasks from "./components/ModalTasks";
 import List from "./components/List"
+import TaskList from "./components/TaskList";
+
 
 
 
@@ -40,6 +42,7 @@ const App = () => {
         console.log('click')
     };
 
+
     useEffect(() => {
         if (authToken) {
             getData();
@@ -56,25 +59,22 @@ const App = () => {
             {!authToken && <Auth />}
             {authToken && (
                 <>
-                    <List mode={mode} />
                     <MyMap></MyMap>
-                    <button onClick={handleClick}
+                    <button
+                        onClick={handleClick}
                         className="employees-button"
-                    >
-                        ЭТО Я
-                    </button>
+                        />
                     <ListHeader listName={"Задания"} getData={getData} />
                     <p>Welcome Привет! {userEmail}</p>
-                    {sortedTasks?.map((task) => (
-                        <ListItem key={task.id} task={task} getData={getData} />
-                    ))}
                     <ModalTasks mode={mode} title="Удаление" active={showModal} onClose={closeModal}>
                         <div></div>
                     </ModalTasks>
+                    <TaskList userEmail={userEmail} />
                 </>
             )}
         </div>
     );
+
 };
 
 export default App;

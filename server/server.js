@@ -7,7 +7,10 @@ const pool = require('./db')
 const {response} = require("express");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 app.use(express.json())
 // все задачи
@@ -42,33 +45,44 @@ app.get('/employees/:userEmail', async (req, res) =>{
 
 // create a new todo
 
-app.post('/todos', async (req, res) =>{
-    const { user_email, title, progress, date } = req.body
-    console.log(user_email, title, progress, date)
-    const id = uuidv4()
-    try{
+app.post('/todos', async (req, res) => {
+    const { user_email, title, progress, date } = req.body;
+    console.log(req.body);
+    console.log(user_email, title, progress, date);
+    const id = uuidv4();
+    try {
         const newToDo = await pool.query(
             'INSERT INTO todos(id, user_email, title, progress, date) VALUES($1, $2, $3, $4, $5)',
             [id, user_email, title, progress, date]
         );
-    } catch (err){
-        console.error(err)
+        res.json({ id, user_email, title, progress, date }); // Send the response back to the client
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error creating task' });
     }
-})
+});
 
 // edit todo
-app.put('/todos/:id', async (req, res) =>{
-    const {id} = req.params
-    const {user_email, title, progress, date} = req.body
-    try{
-        const editToDo =
-            await pool.query("UPDATE todos SET user_email = $1, title = $2, progress = $3, date = $4 WHERE id = $5;",
-            [user_email, title, progress, date, id])
-        res.json(editToDo)
-    } catch (err){
-        console.error(err)
+app.put('/todos/:id', async (req, res) => {
+    const { id } = req.params;
+    console.log(req.body);
+
+    const { user_email, title, progress, date } = req.body;
+
+    console.log(user_email)
+    console.log(title)
+
+    try {
+        const editToDo = await pool.query(
+            'UPDATE todos SET user_email = $1, title = $2, progress = $3, date = $4 WHERE id = $5 RETURNING *;',
+            [user_email, title, progress, date, id]
+        );
+        res.json(editToDo.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error editing task' });
     }
-})
+});
 
 // delete a todo
 app.delete('/todos/:id', async (req, res) => {

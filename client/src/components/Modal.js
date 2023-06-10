@@ -1,16 +1,37 @@
-import {useState} from 'react'
+import React, { useEffect, useState } from 'react';
 import {useCookies} from "react-cookie";
 import ListItem from "./ListItem";
+import TaskList from "./TaskList";
 
-const Modal = ({mode, setShowModal,getData, task}) => {
+const Modal = ({mode, task, getData}) => {
+    const [showModal, setShowModal] = useState(false)
     const [cookies, setCookie, removeCookie] = useCookies(null)
+    const userEmail = cookies.Email;
+    const [tasks, setTasks] = useState([]);
     const editMode = mode === "edit" ? true : false
     const [data, setData] = useState({
         user_email: editMode ? task.user_email : cookies.Email,
-        title: editMode ? task.title : null,
+        title: editMode ? task.title : "",
         progress: editMode ? task.progress : 50,
         date: editMode ? task.date : new Date()
     })
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/123@gg.com`);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data); // Check the data in the console
+                    setTasks(data);
+                }
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const postData = async () => {
         try{
@@ -20,10 +41,11 @@ const Modal = ({mode, setShowModal,getData, task}) => {
                 body: JSON.stringify(data)
 
             })
-            if(response.status === 200){
+            if (response.status === 200) {
                 console.log("Работает")
                 setShowModal(false)
-                getData()
+                setTasks(response.data)  // Update the tasks state with the received data
+                getData()  // Call the getData function to refresh the tasks list
             }
         } catch(err){
             console.error(err)
@@ -47,6 +69,20 @@ const Modal = ({mode, setShowModal,getData, task}) => {
         }
     }
 
+    const deleteItem = async () =>{
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`,{
+
+                method: 'DELETE'
+            })
+            if(response.status === 200){
+                getData()
+            }
+        }catch (err){
+            console.error(err)
+        }
+    }
+
 
 
     const handleChange = (e) =>{
@@ -60,6 +96,7 @@ const Modal = ({mode, setShowModal,getData, task}) => {
         console.log(data)
 
     }
+    const sortedTasks = tasks?.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     return (
 
@@ -80,7 +117,7 @@ const Modal = ({mode, setShowModal,getData, task}) => {
                      onChange={handleChange}
                     />
                     <br/>
-                    <label for="range">Drag to select your current progress</label>
+                    <label htmlFor="range">Drag to select your current progress</label>
                     <input
                      required
                      type="range"
@@ -93,8 +130,10 @@ const Modal = ({mode, setShowModal,getData, task}) => {
                     />
                     <input className={mode} type='submit' onClick={editMode ? editData : postData}/>
                 </form>
-
+                <h2>Tasks:</h2>
+                <TaskList userEmail={userEmail} />
             </div>
+            {showModal && <Modal mode={'edit'} setShowModal={setShowModal} getData={getData} task={task}/>}
         </div>
     );
 }

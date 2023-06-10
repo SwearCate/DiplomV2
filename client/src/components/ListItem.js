@@ -2,11 +2,16 @@ import { useState } from "react";
 import TickIcon from "./TickIcon";
 import Modal from "./Modal";
 import ProgressBar from "./ProgressBar";
+import {useCookies} from "react-cookie";
 
 
-
-const ListItem = ({ task, getData, employee }) => {
+const ListItem = ({ task, employee, getData }) => {
     const [showModal, setShowModal] = useState(false)
+    const [tasks, setTasks] = useState(null);
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const authToken = cookies.AuthToken;
+    const userEmail = cookies.Email;
+
 
     const deleteItem = async () =>{
         try{
@@ -21,12 +26,13 @@ const ListItem = ({ task, getData, employee }) => {
             console.error(err)
         }
     }
+    console.log(task)
     return (
         <li className='list-item'>
 
             <div className='info-container'>
                 <TickIcon/>
-                <p className='task-title'>{employee?.name}</p>
+                <p className='task-title'>{task.title}</p>
             <ProgressBar/>
             </div>
 

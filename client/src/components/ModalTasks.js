@@ -75,17 +75,22 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
         <div className="modalTasks">
             <div className="modal-content">
                 <div className="modal-header">
-                    <div className="modal-title">{employee?.name}</div>
+                    <div className="modal-title">
+                        <button onClick={onClose} className="back-button"></button>
+                        <span className="modal-hud">
+                            <p>Созданные задания</p></span>
+                    </div>
                 </div>
+                <button onClick={handleNextClick} className="next-button"></button>
                 <div className="modal-body">{children}
                     {data.slice(startIndex, startIndex + 3).map((item) => (
                         <div key={item.id} className="modal-employee">
+                            <br></br>
                             <p>Имя: {item.name}</p>
                             <p>Телефон: {item.phone}</p>
                             <p>Место: {item.location}</p>
                         </div>
                     ))}
-                    <button onClick={handleNextClick}>Следующие</button>
                 </div>
             </div>
 
