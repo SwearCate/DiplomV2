@@ -78,7 +78,7 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                     <div className="modal-title">
                         <button onClick={onClose} className="back-button"></button>
                         <span className="modal-hud">
-                            <p>Созданные задания</p></span>
+                            <p>Сотрудники</p></span>
                     </div>
                 </div>
                 <button onClick={handleNextClick} className="next-button"></button>

@@ -33,7 +33,7 @@ const Modal = ({mode, task, getData}) => {
         fetchData();
     }, []);
 
-    const postData = async () => {
+    const postData = async (e) => {
         try{
            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/`,{
                 method: "POST",

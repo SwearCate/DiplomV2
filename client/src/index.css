@@ -426,5 +426,26 @@ ymaps-2-1-79-searchbox{
 .testList{
     height: 500px;
 }
+.modal-delete{
+    margin-top: 5px;
+    width: 20%;
+    border: none;
+    padding: 10px;
+    color: #FFFFFF;
+
+    background: linear-gradient(90deg, #653AC3 12.79%, #8F55FF 100%);
+    border-radius: 34px;
+}
+.modal-save{
+    margin-top: 5px;
+    width: 20%;
+    border: none;
+    padding: 10px;
+    color: #FFFFFF;
+
+    background: linear-gradient(90deg, #653AC3 12.79%, #8F55FF 100%);
+    border-radius: 34px;
+}
+
 
 

@@ -41,7 +41,7 @@ const EditTaskForm = ({ task, onSave }) => {
                     onChange={(e) => setProgress(e.target.value)}
                 />
             </label>
-            <button type="submit">Save</button>
+            <button className="modal-save" type="submit">Save</button>
         </form>
     );
 };

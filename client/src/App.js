@@ -69,7 +69,6 @@ const App = () => {
                     <ModalTasks mode={mode} title="Удаление" active={showModal} onClose={closeModal}>
                         <div></div>
                     </ModalTasks>
-                    <TaskList userEmail={userEmail} />
                 </>
             )}
         </div>
