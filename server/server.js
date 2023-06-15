@@ -43,6 +43,26 @@ app.get('/employees/:userEmail', async (req, res) =>{
     }
 })
 
+// create a new employee
+
+app.post('/employees', async (req, res) =>{
+
+    const { user_email, employee_email, name, phone, location} = req.body
+    console.log(req.body)
+    const id = uuidv4()
+
+    try{
+        const newEmployee = await pool.query(
+            'INSERT INTO employees(id, user_email, employee_email, name, phone, location) VALUES($1, $2, $3, $4, $5, $6)',
+            [id, user_email, employee_email, name, phone, location]
+        );
+        res.json({id, user_email, employee_email, name, phone, location})
+    }catch (err){
+        console.error(err)
+        res.status(500).json({error: "Ошибка создания сотрудника"})
+    }
+})
+
 // create a new todo
 
 app.post('/todos', async (req, res) => {

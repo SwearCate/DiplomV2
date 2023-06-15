@@ -47,6 +47,24 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
         }
     };
 
+    const postData = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/employees/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.status === 200) {
+                console.log('Работает');
+                // Дополнительные действия после успешного ответа сервера
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const [startIndex, setStartIndex] = useState(0);
 
     const handleNextClick = () => {
