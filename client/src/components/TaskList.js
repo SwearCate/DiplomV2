@@ -67,7 +67,7 @@ const TaskList = ({ userEmail }) => {
                         <p>Progress: {task.progress}</p>
                         <p>Date: {task.date}</p>
                         <EditTaskForm task={task} onSave={(updatedTask) => handleEdit(task.id, updatedTask)} userEmail={userEmail} />
-                        <button className="modal-delete" onClick={() => handleDelete(task.id)}>Delete</button>
+                        <button className="modal-delete" onClick={() => handleDelete(task.id)}>Удалить</button>
                     </li>
                 ))}
             </ul>

@@ -103,7 +103,7 @@ const Modal = ({mode, task, getData}) => {
         <div className="overlay">
             <div className="modal">
                 <div className="form-title-container">
-                    <h3>Let's {mode} your task</h3>
+                    <h3>Создание задания</h3>
                     <button onClick={() => setShowModal(false)}>X</button>
                 </div>
 
@@ -111,13 +111,13 @@ const Modal = ({mode, task, getData}) => {
                     <input
                      required
                      maxLength={30}
-                     placeholder="Your task goes here"
+                     placeholder="Ваше задание"
                      name="title"
                      value={data.title}
                      onChange={handleChange}
                     />
                     <br/>
-                    <label htmlFor="range">Drag to select your current progress</label>
+                    <label htmlFor="range">Прогресс</label>
                     <input
                      required
                      type="range"
@@ -130,7 +130,7 @@ const Modal = ({mode, task, getData}) => {
                     />
                     <input className={mode} type='submit' onClick={editMode ? editData : postData}/>
                 </form>
-                <h2>Tasks:</h2>
+                <h2>Задания:</h2>
                 <TaskList userEmail={userEmail} />
             </div>
             {showModal && <Modal mode={'edit'} setShowModal={setShowModal} getData={getData} task={task}/>}
