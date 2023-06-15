@@ -129,11 +129,38 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
         setEditingEmployeeId(null);
     };
 
+    const deleteEmployee = async (employeeId) => {
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_SERVERURL}/employees/${employeeId}`,
+                {
+                    method: "DELETE",
+                }
+            );
+
+            if (response.status === 200) {
+                console.log("Сотрудник успешно удален");
+                await getData();
+            } else {
+                console.error("Ошибка удаления сотрудника");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+
     const [startIndex, setStartIndex] = useState(0);
 
     const handleNextClick = () => {
         setStartIndex((startIndex + 3) % data.length);
+        const listElement = document.querySelector('.modal-body');
+        listElement.classList.add('animate');
+        listElement.addEventListener('animationend', () => {
+            listElement.classList.remove('animate');
+        });
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         updateEmployee(editingEmployeeId);
@@ -203,7 +230,8 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                                             onChange={(e) => setLocation(e.target.value)}
                                         />
                                     </label>
-                                    <button type="submit">Сохранить</button>
+
+                                    <button className="saveButton" type="submit"></button>
                                 </form>
 
                             ) : (
@@ -211,8 +239,8 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                                     <p>Имя: {item.name}</p>
                                     <p>Телефон: {item.phone}</p>
                                     <p>Место: {item.location}</p>
-                                    <button onClick={() => startEditing(item.id)}>
-                                        Редактировать
+                                    <button className="editButton" onClick={() => startEditing(item.id)}/>
+                                    <button className="deleteButton" onClick={() => deleteEmployee(item.id)}>
                                     </button>
                                 </>
                             )}
@@ -259,6 +287,7 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                             />
                         </label>
                         <button type="submit">Добавить сотрудника</button>
+
                     </form>
                 </div>
             </div>

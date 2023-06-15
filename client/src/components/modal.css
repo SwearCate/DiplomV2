@@ -33,6 +33,23 @@
 
     border-radius: 26px;
 }
+
+.modal-body.animate {
+
+    animation: slide-in-fade-in 1s ease-in-out;
+
+}
+
+@keyframes slide-in-fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 .modal-footer{
     display: flex;
     justify-content: space-between;
@@ -112,4 +129,34 @@
     left: 15%;
     width: 10%;
     height: 50%;
+}
+.editButton{
+    border: 0;
+    background-image: url("../Static/Images/edit.svg");
+    background-repeat: no-repeat;
+    width: 57px;
+    height: 57px;
+    position: absolute;
+    top: 2.5%;
+    left: 80%;
+}
+.saveButton{
+    border: 0;
+    background-image: url("../Static/Images/save.svg");
+    background-repeat: no-repeat;
+    width: 57px;
+    height: 57px;
+    position: absolute;
+    top: 50%;
+    left: 5%;
+}
+.deleteButton{
+    border: 0;
+    background-image: url("../Static/Images/delete.svg");
+    background-repeat: no-repeat;
+    width: 57px;
+    height: 57px;
+    position: absolute;
+    top: 2.5%;
+    left: 90%;
 }

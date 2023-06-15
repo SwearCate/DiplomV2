@@ -101,6 +101,24 @@ app.put('/employees/:employeeId', async (req, res) => {
     }
 });
 
+// delete employee
+
+app.delete('/employees/:employeeId', async (req, res) => {
+    const { employeeId } = req.params;
+
+    try {
+        const deletedEmployee = await pool.query(
+            'DELETE FROM employees WHERE id = $1',
+            [employeeId]
+        );
+        res.json({ message: 'Сотрудник успешно удален' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Ошибка удаления сотрудника' });
+    }
+});
+
+
 
 // edit todo
 app.put('/todos/:id', async (req, res) => {
@@ -134,6 +152,7 @@ app.delete('/todos/:id', async (req, res) => {
         console.error(err)
     }
 })
+
 
 // signup
 app.post('/signup', async (req, res) => {
