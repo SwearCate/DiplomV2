@@ -101,4 +101,15 @@
     transform: rotate(180deg);
 
 }
+.modal-footer{
+    background: #FFFFFF;
+    border-radius: 26px;
+    filter: drop-shadow(12px 13px 20px rgba(100, 57, 195, 0.15));
 
+    position: absolute;
+    justify-content: start;
+    top: 25%;
+    left: 15%;
+    width: 10%;
+    height: 50%;
+}

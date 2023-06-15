@@ -24,6 +24,10 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
     const [ employee, setEmployees] = useState(null)
     const [tasks, setTasks] = useState(null);
     const [data, setData] = useState(null);
+    const [name, setName] = useState("");
+    const [employeeEmail, setEmployeeEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [location, setLocation] = useState("");
 
 
 
@@ -49,16 +53,29 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
 
     const postData = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/employees/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
+            const response = await fetch(
+                `${process.env.REACT_APP_SERVERURL}/employees/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        user_email: userEmail,
+                        employee_email: employeeEmail,
+                        name: name,
+                        phone: phone,
+                        location: location,
+                    }),
+                }
+            );
 
             if (response.status === 200) {
-                console.log('Работает');
-                // Дополнительные действия после успешного ответа сервера
+                console.log("Сотрудник успешно добавлен");
+                onSubmit();
+                await getData();
+            } else {
+                console.error("Ошибка добавления сотрудника");
             }
         } catch (err) {
             console.error(err);
@@ -109,6 +126,47 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                             <p>Место: {item.location}</p>
                         </div>
                     ))}
+                </div>
+                <div className="modal-footer">
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            postData();
+                        }}
+                    >
+                        <label>
+                            Имя:
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <label>
+                                Почта
+                                <input
+                                    type="email"
+                                    value={employeeEmail}
+                                    onChange={(e) => setEmployeeEmail(e.target.value)}/>
+                            </label>
+                        </label>
+                        <label>
+                            Телефон:
+                            <input
+                                type="text"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
+                        </label>
+                        <label>
+                            Место:
+                            <input
+                                type="text"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                            />
+                        </label>
+                        <button type="submit">Добавить сотрудника</button>
+                    </form>
                 </div>
             </div>
 
