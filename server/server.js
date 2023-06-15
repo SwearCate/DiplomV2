@@ -58,7 +58,7 @@ app.post('/todos', async (req, res) => {
         res.json({ id, user_email, title, progress, date }); // Send the response back to the client
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Error creating task' });
+        res.status(500).json({ error: 'Ошибка создания задания' });
     }
 });
 
@@ -80,7 +80,7 @@ app.put('/todos/:id', async (req, res) => {
         res.json(editToDo.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Error editing task' });
+        res.status(500).json({ error: 'Ошибка редактирования задания' });
     }
 });
 
@@ -124,12 +124,12 @@ app.post('/login', async (req, res) => {
     try {
         const users = await pool.query('SELECT * FROM users WHERE email = $1', [email])
         const token = jwt.sign({email}, 'secret', {expiresIn: '1hr'})
-        if(!users.rows.length) return res.json({detail: "User does not exist"})
+        if(!users.rows.length) return res.json({detail: "Пользователя не существует"})
        const success = await bcrypt.compare(password, users.rows[0].hashed_password)
         if(success){
             res.json({'email' : users.rows[0].email, token})
         } else {
-            res.json({detaul : 'Login failed'})
+            res.json({detaul : 'Ошибка авторизации'})
         }
         console.log(users.rows)
     } catch (err){
