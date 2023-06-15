@@ -63,6 +63,8 @@ app.post('/employees', async (req, res) =>{
     }
 })
 
+
+
 // create a new todo
 
 app.post('/todos', async (req, res) => {
@@ -81,6 +83,24 @@ app.post('/todos', async (req, res) => {
         res.status(500).json({ error: 'Ошибка создания задания' });
     }
 });
+
+// edit employee
+app.put('/employees/:employeeId', async (req, res) => {
+    const { employeeId } = req.params;
+    const { name, phone, location } = req.body;
+
+    try {
+        const updatedEmployee = await pool.query(
+            'UPDATE employees SET name = $1, phone = $2, location = $3 WHERE id = $4',
+            [name, phone, location, employeeId]
+        );
+        res.json({ message: 'Сотрудник успешно обновлен' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Ошибка обновления сотрудника' });
+    }
+});
+
 
 // edit todo
 app.put('/todos/:id', async (req, res) => {

@@ -114,12 +114,13 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
     };
 
     const startEditing = (employeeId) => {
-        const employee = employees.find((emp) => emp.id === employeeId);
+        const employee = data.find((emp) => emp.id === employeeId);
         setName(employee.name);
         setPhone(employee.phone);
         setLocation(employee.location);
         setEditingEmployeeId(employeeId);
     };
+
 
     const cancelEditing = () => {
         setName("");
@@ -133,6 +134,15 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
     const handleNextClick = () => {
         setStartIndex((startIndex + 3) % data.length);
     };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        updateEmployee(editingEmployeeId);
+        setName("");
+        setPhone("");
+        setLocation("");
+        setEditingEmployeeId(null);
+    };
+
 
 
     useEffect(() => {
@@ -167,14 +177,48 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                     {data.slice(startIndex, startIndex + 3).map((item) => (
                         <div key={item.id} className="modal-employee">
                             <br></br>
-                            <p>Имя: {item.name}</p>
-                            <p>Телефон: {item.phone}</p>
-                            <p>Место: {item.location}</p>
-                            <button onClick={() => startEditing(employee.id)}>
-                                Редактировать
-                            </button>
+                            {editingEmployeeId === item.id ? (
+                                <form onSubmit={handleSubmit}>
+                                    <label>
+                                        Имя:
+                                        <input
+                                            type="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
+                                    </label>
+                                    <label>
+                                        Телефон:
+                                        <input
+                                            type="text"
+                                            value={phone}
+                                            onChange={(e) => setPhone(e.target.value)}
+                                        />
+                                    </label>
+                                    <label>
+                                        Место:
+                                        <input
+                                            type="text"
+                                            value={location}
+                                            onChange={(e) => setLocation(e.target.value)}
+                                        />
+                                    </label>
+                                    <button type="submit">Сохранить</button>
+                                </form>
+
+                            ) : (
+                                <>
+                                    <p>Имя: {item.name}</p>
+                                    <p>Телефон: {item.phone}</p>
+                                    <p>Место: {item.location}</p>
+                                    <button onClick={() => startEditing(item.id)}>
+                                        Редактировать
+                                    </button>
+                                </>
+                            )}
                         </div>
                     ))}
+
                 </div>
                 <div className="modal-footer">
                     <form
