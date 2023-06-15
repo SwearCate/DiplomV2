@@ -22,12 +22,14 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
     const authToken = cookies.AuthToken
     const userEmail = cookies.Email
     const [ employee, setEmployees] = useState(null)
+    const [employees] = useState([]);
     const [tasks, setTasks] = useState(null);
     const [data, setData] = useState(null);
     const [name, setName] = useState("");
     const [employeeEmail, setEmployeeEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [location, setLocation] = useState("");
+    const [editingEmployeeId, setEditingEmployeeId] = useState(null);
 
 
 
@@ -82,6 +84,50 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
         }
     };
 
+    const updateEmployee = async (employeeId) => {
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_SERVERURL}/employees/${employeeId}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        location: location,
+                    }),
+                }
+            );
+
+            if (response.status === 200) {
+                console.log("Данные сотрудника успешно обновлены");
+                onSubmit();
+                await getData();
+            } else {
+                console.error("Ошибка обновления данных сотрудника");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const startEditing = (employeeId) => {
+        const employee = employees.find((emp) => emp.id === employeeId);
+        setName(employee.name);
+        setPhone(employee.phone);
+        setLocation(employee.location);
+        setEditingEmployeeId(employeeId);
+    };
+
+    const cancelEditing = () => {
+        setName("");
+        setPhone("");
+        setLocation("");
+        setEditingEmployeeId(null);
+    };
+
     const [startIndex, setStartIndex] = useState(0);
 
     const handleNextClick = () => {
@@ -124,6 +170,9 @@ const ModalTasks = ({ mode,active, title, onSubmit, onClose, children, task}: Pr
                             <p>Имя: {item.name}</p>
                             <p>Телефон: {item.phone}</p>
                             <p>Место: {item.location}</p>
+                            <button onClick={() => startEditing(employee.id)}>
+                                Редактировать
+                            </button>
                         </div>
                     ))}
                 </div>
